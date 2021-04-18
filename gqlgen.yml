@@ -44,11 +44,11 @@ autobind:
 # your liking
 models:
   Category:
-    model: github.com/robertomorel/go-lang-graphql/graph/model/Category 
+    model: github.com/robertomorel/go-lang-graphql/graph/model.Category 
   Course:
-    model: github.com/robertomorel/go-lang-graphql/graph/model/Course 
+    model: github.com/robertomorel/go-lang-graphql/graph/model.Course 
   Chapter:
-    model: github.com/robertomorel/go-lang-graphql/graph/model/Chapter     
+    model: github.com/robertomorel/go-lang-graphql/graph/model.Chapter     
   ID:
     model:
       - github.com/99designs/gqlgen/graphql.ID

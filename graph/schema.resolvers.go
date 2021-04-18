@@ -12,11 +12,46 @@ import (
 	"github.com/robertomorel/go-lang-graphql/graph/model"
 )
 
+// Gerado depois de rodar "gqlgen generate" ------------
+func (r *categoryResolver) Courses(ctx context.Context, obj *model.Category) ([]*model.Course, error) {
+	//panic(fmt.Errorf("not implemented"))
+
+	// Listar os cursos de uma determinada categoria
+	var courses []*model.Course
+
+	// Percorre todos os cursos
+	for _, v := range r.Resolver.Courses {
+		// Aquele curso que tiver a CategoryId igual ao ID passado...
+		if v.Category.ID == obj.ID {
+			courses = append(courses, v)
+		}
+	}
+
+	return courses, nil
+}
+
+// Gerado depois de rodar "gqlgen generate" ------------
+func (r *courseResolver) Chapters(ctx context.Context, obj *model.Course) ([]*model.Chapter, error) {
+	//panic(fmt.Errorf("not implemented"))
+
+	// Listar os chapters de um determinado curso
+	var chapters []*model.Chapter
+
+	// Percorre todos os chapters
+	for _, v := range r.Resolver.Chapters {
+		// Aquele chapter que tiver a CourseId igual ao ID passado...
+		if v.Course.ID == obj.ID {
+			chapters = append(chapters, v)
+		}
+	}
+
+	return chapters, nil
+}
+
 /*
 	* goes in front of a variable that holds a memory address and resolves it
 	(it is therefore the counterpart to the & operator). It goes and gets the
 	thing that the pointer was pointing at, e.g
-
 	How to test
 	----------------------------
 	mutation createCategory {
@@ -92,6 +127,23 @@ func (r *mutationResolver) CreateCourse(ctx context.Context, input model.NewCour
 	return &course, nil
 }
 
+/*
+	----------------------------
+	mutation createChapter {
+		createChapter(input: {
+			name: "Evolving with PHP - Chapter 1"
+			courseId: "T4037200794235010051"
+		}) {
+			id
+			name
+			course {
+				name
+				description
+			}
+		}
+	}
+	----------------------------
+*/
 func (r *mutationResolver) CreateChapter(ctx context.Context, input model.NewChapter) (*model.Chapter, error) {
 	// Criando variável do tipo Category (*model está em memória)
 	var course *model.Course
@@ -149,11 +201,22 @@ func (r *queryResolver) Chapters(ctx context.Context) ([]*model.Chapter, error) 
 	return r.Resolver.Chapters, nil
 }
 
+// Category returns generated.CategoryResolver implementation.
+func (r *Resolver) Category() generated.CategoryResolver { return &categoryResolver{r} }
+
+// Course returns generated.CourseResolver implementation.
+func (r *Resolver) Course() generated.CourseResolver { return &courseResolver{r} }
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+// Gerado depois de rodar "gqlgen generate" ------------
+type categoryResolver struct{ *Resolver }
+type courseResolver struct{ *Resolver }
+
+// -----------------------------------------------------
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
