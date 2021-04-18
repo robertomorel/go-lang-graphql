@@ -1,0 +1,69 @@
+# Write your query or mutation here
+mutation createCategory {
+  createCategory(input: {
+    name: "PHP",
+    description: "PHP is awesome!"
+  }) {
+    id
+    name
+    description
+  }
+}
+
+query findCategories {
+  categories {
+    id
+    name
+    description
+    courses {
+      id
+      name
+      description
+    }
+  }
+}
+
+mutation createCourse {
+  createCourse(input: {
+    name: "Evolving with PHP"
+    description: "Mega PHP is awesome!"
+    categoryId: "T4037200794235010051"
+  }) {
+    id
+    name
+    description
+    category {
+      id
+      name
+    }
+  }
+}
+
+query findCourses {
+  courses {
+    id
+    name
+    description
+    chapters {
+      id
+      course
+    }
+    category {
+      name
+    }
+  }
+}
+
+mutation createChapter {
+  createChapter(input: {
+    name: "Evolving with PHP - Chapter 1"
+    courseId: "T4037200794235010051"
+  }) {
+    id
+    name
+    course {
+      name
+      description
+    }
+  }
+}
