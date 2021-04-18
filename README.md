@@ -30,7 +30,8 @@ It works by a GraphQL Server, which search for entities or another APIs, integra
 
 ### "N+1" Problematic
 When the Server creates many queries and SQL, one for each node that it brings. 
-It´s a classic error in GraphQL
+It´s a classic error in GraphQL.
+
 To know more, click [here](https://gqlgen.com/reference/dataloaders/)
 
 ### Docs
